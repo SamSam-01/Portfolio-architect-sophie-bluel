@@ -1,6 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
   const portfolio = document.querySelector("#portfolio .gallery");
   const filterButtons = document.querySelector("#filter-buttons");
+  console.log(localStorage.getItem("token"));
+
+  const token = localStorage.getItem("token");
+  if (token) {
+      document.getElementById("login-button").textContent = "logout";
+  }
 
   // Générer les boutons de filtre
   const categories = new Set(); // Utilisation d'un Set pour des valeurs uniques
@@ -66,5 +72,65 @@ document.addEventListener("DOMContentLoaded", () => {
           allButton.classList.add("active");
         }
       }
-    }    
+    }
+  const loginButton = document.getElementById("login-button");
+  const sectionsToHide = [document.getElementById("introduction"), document.getElementById("portfolio"), document.getElementById("contact")];
+
+  loginButton.addEventListener("click", () => {
+      const loginSection = document.getElementById("login");
+      if (loginSection.style.display === "none") {
+          loginSection.style.display = "block";
+          sectionsToHide.forEach(section => section.style.display = "none");
+      } else {
+          loginSection.style.display = "none";
+          sectionsToHide.forEach(section => section.style.removeProperty("display"));
+      }
+  });
+  const loginForm = document.getElementById("login-form");
+
+  loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const email = e.target.email.value;
+      const password = e.target.password.value;
+
+      try {
+          const response = await fetch("http://localhost:5678/api/users/login", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                  email,
+                  password
+              })
+          });
+
+          const data = await response.json();
+
+          if (data.token) {
+              localStorage.setItem("token", data.token);
+              localStorage.setItem("userId", data.userId);
+
+              console.log(localStorage.getItem("token"));
+
+              document.getElementById("login").style.display = "none";
+              sectionsToHide.forEach(section => section.style.removeProperty("display"));
+              loginButton.textContent = "logout";
+          } else {
+              alert("Identifiants incorrects.");
+          }
+      } catch (error) {
+          console.error("Erreur de connexion:", error);
+          alert("Une erreur est survenue lors de la connexion. Veuillez réessayer.");
+      }
+  });
+  // Gérer la déconnexion
+  loginButton.addEventListener("click", () => {
+    if (loginButton.textContent === "logout") {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userId");
+        loginButton.textContent = "login";
+    }
+  });
 });
