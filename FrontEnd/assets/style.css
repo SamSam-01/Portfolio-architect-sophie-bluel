@@ -29,7 +29,14 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 	line-height: 1;
+}
+main {
+	display: block;
+	flex: 1;
 }
 ol, ul {
 	list-style: none;
@@ -121,10 +128,24 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
-#portfolio h2 {
+#portfolio .portfolio-title {
 	text-align: center;
 	margin-bottom: 1em;
+	width: 100%; /* Assurez-vous que le conteneur occupe toute la largeur disponible */
 }
+
+.portfolio-title {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: center; /* Centre les éléments enfants à l'intérieur du conteneur */
+}
+
+.portfolio-title h2 {
+	margin-right: 20px; /* Espace entre le h2 et le bouton */
+}
+
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -190,8 +211,6 @@ footer nav ul {
   text-align: center;
 }
 
-
-
 #filter-buttons button {
 	border-radius: 20px;
 	min-width: 100px;
@@ -214,5 +233,98 @@ footer nav ul {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	height: 100vh;
+}
+
+#editModeBanner {
+	max-width: none;
+}
+
+#editModeBanner {
+	background-color: black;
+	color: white;
+	padding: 10px;
+	position: absolute;
+	text-align: center;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+.edit-icon:before {
+	content: "\270E"; /* représentation Unicode pour une icône d'édition */
+	margin-right: 5px;
+}
+
+.hidden {
+	display: none;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: white;
+  width: 40%;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+  border-radius: 8px;
+}
+
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+.image-gallery img {
+  width: calc(20% - 16px); /* 5 images par ligne */
+  margin-bottom: 16px;
+}
+
+.separator {
+  width: 90%;
+  margin: 20px auto;
+  border: 0;
+  border-top: 1px solid #ccc;
+}
+
+#add-photo {
+  background-color: #1D6154;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.trash-icon-wrapper {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: black;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.fa-trash {
+  color: white;
 }
