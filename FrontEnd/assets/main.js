@@ -61,7 +61,7 @@ async function updateWorks() {
       filterButtons.appendChild(allButton);
 
       // Ajout des catégories depuis la requête
-      categoriesData.forEach(category => {
+      categoriesData.forEach((category) => {
         const button = document.createElement("button");
         button.innerText = category.name;
         button.addEventListener("click", () => filterProjects(category.name));
@@ -74,17 +74,20 @@ async function updateWorks() {
 }
 
 function filterProjects(category) {
-  document.querySelectorAll(".project").forEach(project => {
-    project.style.display = (project.dataset.category === category || !category) ? "block" : "none";
+  document.querySelectorAll(".project").forEach((project) => {
+    project.style.display =
+      project.dataset.category === category || !category ? "block" : "none";
   });
 
   // Mettre à jour l'état actif des boutons
-  document.querySelectorAll("#filter-buttons button").forEach(button => {
+  document.querySelectorAll("#filter-buttons button").forEach((button) => {
     button.classList.remove("active");
   });
 
   if (category) {
-    const activeButton = Array.from(document.querySelectorAll("#filter-buttons button")).find(button => button.innerText === category);
+    const activeButton = Array.from(
+      document.querySelectorAll("#filter-buttons button")
+    ).find((button) => button.innerText === category);
     if (activeButton) {
       activeButton.classList.add("active");
     }
@@ -110,9 +113,23 @@ function showModalWithImages() {
   projects.forEach((project) => {
     const img = document.createElement("img");
     img.src = project.querySelector("img").src;
-    imageGallery.appendChild(img);
-  });
+    
 
+    const trashIcon = document.createElement("i");
+    trashIcon.className = "fas fa-trash-can";
+
+    trashIcon.addEventListener("click", function() {
+      console.log('delete project' + project.dataset.userId );
+    });
+
+    const container = document.createElement("div");
+    container.className = "container-div";
+    container.appendChild(img);
+    container.appendChild(trashIcon);
+
+    imageGallery.appendChild(container);
+  });
+  
   // Afficher le modal
   modal.style.display = "flex";
 }
@@ -132,82 +149,85 @@ function updateStatus(status) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  
   // Écouteur pour fermer le modal
-  document.addEventListener("click", function(event) {
+  document.addEventListener("click", function (event) {
     if (event.target.id === "modal") {
       document.getElementById("modal").style.display = "none";
     }
   });
 
-  document.querySelector(".close").addEventListener("click", function() {
+  document.querySelector(".close").addEventListener("click", function () {
     document.getElementById("modal").style.display = "none";
-  });  
-  
+  });
+
   // Écouteur pour le bouton "Ajouter une photo"
-  document.getElementById("add-photo").addEventListener("click", function() {
+  document.getElementById("add-photo").addEventListener("click", function () {
     console.log("add");
   });
-  
+
   // Initialisation du modal
-  document.getElementById("edit-mode").addEventListener("click", showModalWithImages);
-  
+  document
+    .getElementById("edit-mode")
+    .addEventListener("click", showModalWithImages);
+
   if (token) {
-    updateStatus('connect');
+    updateStatus("connect");
   }
 
   // Initialisation des projets
   updateWorks();
 
   loginButton.addEventListener("click", () => {
-      const loginSection = document.getElementById("login");
-      if (loginSection.style.display === "none") {
-          loginSection.style.display = "block";
-          portfolioContent.style.display = "none";
-      } else {
-          loginSection.style.display = "none";
-          portfolioContent.style.removeProperty("display");
-      }
+    const loginSection = document.getElementById("login");
+    if (loginSection.style.display === "none") {
+      loginSection.style.display = "block";
+      portfolioContent.style.display = "none";
+    } else {
+      loginSection.style.display = "none";
+      portfolioContent.style.removeProperty("display");
+    }
   });
 
   // Gérer la connexion
   loginForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
+    e.preventDefault();
 
-      const email = e.target.email.value;
-      const password = e.target.password.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
 
-      try {
-          const response = await fetch("http://localhost:5678/api/users/login", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json"
-              },
-              body: JSON.stringify({
-                  email,
-                  password
-              })
-          });
+    try {
+      const response = await fetch("http://localhost:5678/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
 
-          const data = await response.json();
+      const data = await response.json();
 
-          if (data.token) {
-              localStorage.setItem("token", data.token);
-              localStorage.setItem("userId", data.userId);
-              updateStatus('connect');
-          } else {
-              alert("Identifiants incorrects.");
-          }
-      } catch (error) {
-          console.error("Erreur de connexion:", error);
-          alert("Une erreur est survenue lors de la connexion. Veuillez réessayer.");
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userId", data.userId);
+        updateStatus("connect");
+      } else {
+        alert("Identifiants incorrects.");
       }
+    } catch (error) {
+      console.error("Erreur de connexion:", error);
+      alert(
+        "Une erreur est survenue lors de la connexion. Veuillez réessayer."
+      );
+    }
   });
 
   // Gérer la déconnexion
   loginButton.addEventListener("click", () => {
     if (loginButton.textContent === "logout") {
-        updateStatus("disconnect");
+      updateStatus("disconnect");
     }
   });
 });
