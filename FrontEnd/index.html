@@ -25,11 +25,11 @@
       <i class="fa-regular fa-pen-to-square"></i> Mode édition
     </div>
     <header>
-      <h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
+      <h1 id="home-btn">Sophie Bluel <span>Architecte d'intérieur</span></h1>
       <nav>
         <ul>
-          <li>projets</li>
-          <li>contact</li>
+          <li><a href="#portfolio">projets</a></li>
+          <li><a href="#contact">contact</a></li>
           <li id="login-button">login</li>
           <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
         </ul>
@@ -75,7 +75,7 @@
         <section id="portfolio">
           <div class="portfolio-title">
             <h2>Mes Projets</h2>
-            <div id="edit-mode">
+            <div id="edit-mode" class="hidden">
               <i class="fa-regular fa-pen-to-square"></i> modifier
             </div>
           </div>
@@ -84,13 +84,15 @@
         </section>
         <div id="modal" class="modal">
           <div class="modal-content">
-            <span class="close">&times;</span>
-            <h1>Galerie photo</h1>
-            <div class="image-gallery">
-              <!-- Les images seront insérées ici via JS -->
-            </div>
-            <hr class="separator" />
-            <button id="add-photo">Ajouter une photo</button>
+						<span class="close">&times;</span>
+						<!-- Delete project -->
+						<div class="gallery-content">
+							<h3>Galerie photo</h3>
+							<div class="image-gallery">
+							</div>
+							<hr class="separator" />
+							<button id="add-photo">Ajouter une photo</button>
+						</div>
           </div>
         </div>
         <section id="contact">

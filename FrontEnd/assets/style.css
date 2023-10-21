@@ -146,6 +146,13 @@ header {
   justify-content: space-between;
   margin: 50px 0;
 }
+header a {
+  color: black;
+  text-decoration: none;
+}
+header #home-btn {
+  cursor: pointer;
+}
 section {
   margin: 50px 0;
 }
@@ -333,8 +340,7 @@ footer nav ul {
 
 .container-div {
   position: relative;
-  width: calc(20% - 16px); /* doit correspondre à la largeur de l'image */
-  margin-bottom: 16px; /* doit correspondre à la marge du bas de l'image */
+  width: calc(20% - 8px); /* doit correspondre à la largeur de l'image */
 }
 
 
@@ -372,7 +378,8 @@ footer nav ul {
 
 .modal-content {
   background: white;
-  width: 40%;
+  width: 50%;
+  min-height: 70%;
   text-align: center;
   padding: 20px;
   position: relative;
@@ -382,13 +389,14 @@ footer nav ul {
 .image-gallery {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 16px;
+  justify-content: left;
+  row-gap: 16px;
+	column-gap: 8px;
+	margin: auto 20px;
 }
 
 .container-div img {
   width: 100%; /* 5 images par ligne */
-  margin-bottom: 16px;
 }
 
 .separator {
@@ -426,4 +434,9 @@ footer nav ul {
 
 .fa-trash {
   color: white;
+}
+
+h3 {
+	font-size: x-large;
+	margin: 30px;
 }

@@ -5,6 +5,8 @@ const categories = new Set();
 const loginButton = document.getElementById("login-button");
 const portfolioContent = document.getElementById("portfolio-content");
 const loginForm = document.getElementById("login-form");
+var works = null;
+var categoriesData = null;
 
 async function get_data(type) {
   try {
@@ -32,8 +34,8 @@ async function updateWorks() {
       filterButtons.removeChild(filterButtons.firstChild);
     }
 
-    const works = await get_data("works");
-    const categoriesData = await get_data("categories");
+    works = await get_data("works");
+    categoriesData = await get_data("categories");
 
     if (works && categoriesData) {
       works.forEach((work) => {
@@ -108,18 +110,34 @@ function showModalWithImages() {
     imageGallery.removeChild(imageGallery.firstChild);
   }
 
-  // Ajouter les images
-  const projects = document.querySelectorAll(".project");
-  projects.forEach((project) => {
+  // Affichers tout les projets
+  works.forEach((work) => {
     const img = document.createElement("img");
-    img.src = project.querySelector("img").src;
-    
+    img.src = work.imageUrl;
+    img.alt = work.title;
 
     const trashIcon = document.createElement("i");
     trashIcon.className = "fas fa-trash-can";
 
+    //TODO: Implement delete
     trashIcon.addEventListener("click", function() {
-      console.log('delete project' + project.dataset.userId );
+      console.log('delete project' + work.id );
+      console.log(token);
+      fetch("http://localhost:5678/api/works/" + work.id, { 
+        method: 'DELETE',
+        headers: {
+            'Authorization': 'Bearer ' + token
+        }
+      }).then(response => {
+        if (response.ok) {  // Si la réponse est OK (code de statut 200-299)
+            container.remove();  // Supprimez le conteneur du projet de l'élément parent
+        } else {
+            console.error("Erreur lors de la suppression du projet");
+        }
+      }).catch(error => {
+          console.error("Erreur de fetch :", error);
+      });
+      updateWorks();
     });
 
     const container = document.createElement("div");
@@ -138,29 +156,36 @@ function updateStatus(status) {
   if (status === "connect") {
     document.getElementById("login-button").textContent = "logout";
     document.getElementById("editModeBanner").classList.remove("hidden");
+    document.getElementById("edit-mode").classList.remove("hidden");
     document.getElementById("login").style.display = "none";
     portfolioContent.style.removeProperty("display");
   } else if (status === "disconnect") {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     document.getElementById("editModeBanner").classList.add("hidden");
+    document.getElementById("edit-mode").classList.add("hidden");
     loginButton.textContent = "login";
   }
+}
+
+function closemodal() {
+  document.querySelector(".gallery-content").style.display = "block";
+  document.getElementById("modal").style.display = "none";
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   // Écouteur pour fermer le modal
   document.addEventListener("click", function (event) {
     if (event.target.id === "modal") {
-      document.getElementById("modal").style.display = "none";
+      closemodal();
     }
   });
 
   document.querySelector(".close").addEventListener("click", function () {
-    document.getElementById("modal").style.display = "none";
+    closemodal();
   });
 
-  // Écouteur pour le bouton "Ajouter une photo"
+  // TODO: Implement add
   document.getElementById("add-photo").addEventListener("click", function () {
     console.log("add");
   });
