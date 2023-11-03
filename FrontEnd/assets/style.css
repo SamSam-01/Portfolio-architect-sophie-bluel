@@ -106,6 +106,7 @@ section {
   display: block;
 }
 body {
+  background-color: #FFFEF8;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -285,6 +286,10 @@ input[type="submit"] {
   border-radius: 60px;
 }
 
+footer {
+  background-color: #fff;
+}
+
 footer nav ul {
   display: flex;
   justify-content: flex-end;
@@ -317,6 +322,10 @@ footer nav ul {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.login-container h2 {
+  margin-bottom: 50px;
 }
 
 #editModeBanner {
@@ -381,9 +390,13 @@ footer nav ul {
   width: 50%;
   min-height: 70%;
   text-align: center;
-  padding: 20px;
+  padding: 20px 0%;
   position: relative;
   border-radius: 8px;
+}
+
+.gallery-content {
+  margin: 0px 10%
 }
 
 .image-gallery {
@@ -399,6 +412,17 @@ footer nav ul {
   width: 100%; /* 5 images par ligne */
 }
 
+.modal-bottom {
+  align-self: center;
+  bottom: 20px;
+  position: absolute;
+  width: 80%;
+}
+
+.modal-bottom button {
+  margin: 20px;
+}
+
 .separator {
   width: 90%;
   margin: 20px auto;
@@ -407,12 +431,7 @@ footer nav ul {
 }
 
 #add-photo {
-  background-color: #1d6154;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  width: 237px;
 }
 
 .close {
@@ -439,4 +458,115 @@ footer nav ul {
 h3 {
 	font-size: x-large;
 	margin: 30px;
+}
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
+#login-form a {
+  text-align: center;
+  color: black;
+}
+
+.add-content {
+  display: none; /* Cache par défaut */
+  flex-direction: column;
+}
+
+.add-image-section {
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #E8F1F6;
+  padding: 1px;
+  width: 80%;
+  height: 169px;
+  border-radius: 3px;
+  position: relative;
+}
+
+.add-image-section img {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: fit-content;
+  z-index: 1; 
+}
+
+#image-upload {
+  display: none;
+}
+
+#submit-photo:disabled {
+  background-color: grey;
+}
+
+#submit-photo {
+  width: 237px;
+}
+
+#back-to-gallery {
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.select-image {
+  width: 173px;
+  background-color: #CBD6DC !important;
+  color: #306685 !important;
+  font-family: "Work Sans" !important;
+  font-size: 14px;
+}
+
+.fa-image {
+  font-size: 76px;
+  color: #B9C5CC;
+}
+
+.add-project-section {
+  margin-bottom: 16px;
+}
+
+.box {
+  border: none;
+  box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+  height: 51px;
+  padding: 0px 5%;
+  margin-bottom: 10px;
+}
+
+label {
+  font-weight: bolder;
+  margin-bottom: 10px;
+}
+
+.add-project-section .box {
+  width: 70%;
+}
+
+.add-project-section h4{
+  text-align: left;
+  margin-left: 10%;
+  font-weight: bolder;
+  margin-bottom: 10px;
+}
+
+.button-style {
+  align-self: center;
+  border: none;
+  min-width: 100px;
+  border-radius: 20px;
+  background-color: #1d6154;
+  color: #fff;
+  font-family: "Syne";
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
 }

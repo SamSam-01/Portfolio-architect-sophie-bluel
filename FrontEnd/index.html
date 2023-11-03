@@ -38,13 +38,14 @@
     <main>
       <section id="login" style="display: none">
         <div class="login-container">
-          <h2>Connexion</h2>
+          <h2>Log In</h2>
           <form id="login-form">
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required />
+            <input type="email" id="email" name="email" class="box" required />
             <label for="password">Mot de passe:</label>
-            <input type="password" id="password" name="password" required />
-            <input type="submit" value="Se connecter" />
+            <input type="password" id="password" name="password" class="box" required />
+            <input type="submit" value="Se connecter" class="button-style"/>
+            <a href="password">Mot de passe oublié</a>
           </form>
         </div>
       </section>
@@ -90,9 +91,34 @@
 							<h3>Galerie photo</h3>
 							<div class="image-gallery">
 							</div>
-							<hr class="separator" />
-							<button id="add-photo">Ajouter une photo</button>
-						</div>
+              <div class="modal-bottom">
+                <hr class="separator" />
+                <button id="add-photo" class="button-style">Ajouter une photo</button>
+              </div>
+            </div>
+            <!-- Ajout de projet -->
+            <div class="add-content">
+              <i class="fa-solid fa-arrow-left" id="back-to-gallery"></i>
+              <h3>Ajout photo</h3>
+              <div class="add-image-section add-project-section">
+                  <i class="fa-regular fa-image"></i>
+                  <input type="file" id="image-upload" accept=".jpg, .png" hidden />
+                  <label for="image-upload" class="select-image button-style">+ Ajouter photo</label>
+                  <p>jpg, png : 4mo max</p>
+              </div>
+              <div class="add-project-section">
+                <h4>Titre</h4>
+                <input type="text" id="project-title" class="box" required />
+              </div>
+              <div class="add-project-section">
+                <h4>Categories</h4>
+                <select id="category-dropdown" class="box" style="width: 80%;"></select>
+              </div>
+              <div class="modal-bottom">
+                <hr class="separator" />
+                <button id="submit-photo" class="button-style">Valider</button>
+              </div>
+            </div>
           </div>
         </div>
         <section id="contact">
